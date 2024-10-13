@@ -1,0 +1,23 @@
+:root {
+  --font-family: "Noto Sans",sans-serif;
+  --purple-color: #7653FC;
+  --black-color: #3B434E;
+  --gray-color: #B3C0D9;
+  --light-gray-color: #E5E5E5;
+  --light-green-color: #C8F8E4;
+  --green-color: #1DC47E;
+  --orange-color: #FC8360;
+  --light-black-color: #787D85;
+  --grey-border-color: #EBEBEB;
+  --red-color: #DE0000;
+}
+
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-family);
+}

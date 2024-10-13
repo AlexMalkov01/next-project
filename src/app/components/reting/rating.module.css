@@ -1,0 +1,7 @@
+.star {
+    cursor: pointer;
+}
+
+.filled {
+    fill: var(--purple-color);
+}

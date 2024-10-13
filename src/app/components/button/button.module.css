@@ -1,0 +1,42 @@
+.btn {
+    display: inline-block;
+    width: 150px;
+    height: 35px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.primary {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+
+    border: none;
+    border-radius: 5px;
+    background-color: var(--purple-color);
+}
+
+.trasparrent {
+    color: var(--black-color);
+    
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0%;
+    text-align: center;
+
+    background-color: #fff;
+    border: 1px solid var(--light-gray-color);
+    border-radius: 5px;
+}
+
+.arrow {
+    margin-left: 10px;
+    transition: all .2;
+}
+
+.arrowBottom {
+    transform: rotate(90deg);
+}
+

@@ -5,6 +5,7 @@ import { Footer } from "./Footer/footer"
 import { Sidebar } from "./Sidebar/sidebar"
 import { Header } from "./Header/Header"
 import { FunctionComponent } from "react"
+import { AppContextProvider } from "../context/app.context"
 
 const Layout = ({children}:ILayoutProps)=> {
 
@@ -37,9 +38,11 @@ const Layout = ({children}:ILayoutProps)=> {
 export const withLayout = <T extends Record<string , unknown>>(Component:FunctionComponent<T>)=> {
     return function withLayoutCompomemt (props:T):JSX.Element {
         return (
-        <Layout>
-            <Component {...props}/>
-        </Layout>
+            <Layout>
+                <Component {...props}/>
+            </Layout>
         )
     }
 }
+
+

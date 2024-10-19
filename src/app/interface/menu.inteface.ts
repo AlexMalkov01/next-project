@@ -1,3 +1,5 @@
+import { MENU_CATEGORY } from "../enum/menu-catygory.enum"
+
 export interface IMenuItem {
     _id: {
         secondCategory:string
@@ -10,4 +12,11 @@ export interface IPageItem {
     title:string
     _id:string
     category:string
+}
+
+export interface IFerstLevelMenuItem {
+    route:string,
+    name:string,
+    icon: JSX.Element,
+    id: MENU_CATEGORY
 }

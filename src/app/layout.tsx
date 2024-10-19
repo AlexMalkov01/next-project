@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Head from "next/head";
+import { MENU_CATEGORY } from "./enum/menu-catygory.enum";
+import { IMenuItem } from "./interface/menu.inteface";
+import axios from "axios";
+import { AppContextProvider } from "./context/app.context";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -19,11 +23,12 @@ export const metadata: Metadata = {
   description: "Curses",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { menu } = await getMenuItem()
   return (
     <html lang="ru">
       <Head>
@@ -33,8 +38,20 @@ export default function RootLayout({
       </Head>
       
       <body>
+      <AppContextProvider menu={menu} firstCategory={MENU_CATEGORY.CURSES} >  
         {children}
+      </AppContextProvider>  
       </body>
     </html>
   );
+}
+
+
+async function getMenuItem () {
+        
+  const { data: menu } = await axios.post<IMenuItem[]>(`${process.env.API_DAIMON}top-page/find`,{firstCategory:MENU_CATEGORY.CURSES})
+  
+  return {
+    menu
+  }
 }

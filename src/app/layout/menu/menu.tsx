@@ -2,45 +2,29 @@
 import stiles from "./menu.module.css"
 import cn from "classnames"
 import { AppContext } from "@/app/context/app.context"
-import { MENU_CATEGORY } from "@/app/enum/menu-catygory.enum"
 import { IFerstLevelMenuItem, IMenuItem, IPageItem } from "@/app/interface/menu.inteface"
-import { useContext } from "react"
-import BookIconSvg from "./book-icon.svg"
-import CoursesIconSvg from "./courses-icon.svg"
-import ProductIconSvg from "./product-icon.svg"
-import ServisIconSvg from "./servis-icon.svg"
-
-const ferstLevelMenu:IFerstLevelMenuItem[] = [
-    {
-        route:"courses",
-        name:"Курсы",
-        icon: <CoursesIconSvg/>,
-        id: MENU_CATEGORY.CURSES
-    },
-    {
-        route:"sevices",
-        name:"Сервисы",
-        icon: <ServisIconSvg/>,
-        id: MENU_CATEGORY.SERVICES
-    },
-    {
-        route:"books",
-        name:"Книги",
-        icon: <BookIconSvg/>,
-        id: MENU_CATEGORY.BOOKS
-    },
-    {
-        route:"products",
-        name:"Товары",
-        icon: <ProductIconSvg/>,
-        id: MENU_CATEGORY.PRODUCTS
-    }
-]
-
+import { useContext, useState } from "react"
+import Link from "next/link"
+import { usePathname} from "next/navigation"
+import { ferstLevelMenu } from "@/app/helpers/menu.helpers"
 
 export const Menu = () => {
-    const { menu ,firstCategory} = useContext(AppContext)
-    
+    const { menu ,firstCategory , setMenu} = useContext(AppContext)
+    const [stateMenu, useStateMenu] = useState<IMenuItem[]>(menu) 
+
+    const isActivMenuFunc = (menuSulary:IMenuItem)=> {
+       useStateMenu((prev)=> prev.map(m => {
+        if (m._id === menuSulary._id && m.isActive === true) {
+            return { ...m, isActive: false }; 
+            }
+
+        if (m._id === menuSulary._id) {
+        return { ...m, isActive: true }; 
+        }
+        return { ...m, isActive: false };
+    }) )
+    }
+
     const buildFirstLevelMenu = () => {
         
         return (
@@ -51,12 +35,12 @@ export const Menu = () => {
                 return (
                     <div key={m.id}>
                             <div className={cn(stiles.ferstMinuBlok ,{
-                                [stiles.ferstActive]:isActivMenu
+                                [stiles.ferstActive]: isActivMenu
                             })}>
                                 {m.icon}
                                 <span>{m.name}</span>
                             </div> 
-                            {isActivMenu && <div className={cn(stiles.secondCategoryBlok)}> {buildSecondLevelMenu(menu)} </div> }
+                            {isActivMenu && <div className={cn(stiles.secondCategoryBlok)}>{buildSecondLevelMenu(stateMenu , m.route)}</div> }
                     </div>
                 )
             })
@@ -65,17 +49,24 @@ export const Menu = () => {
         )
     }
 
-    const buildSecondLevelMenu = (menu:IMenuItem[]) => {
+    const buildSecondLevelMenu = (menu:IMenuItem[], route:string) => {
+       
         return (
             <>
             { menu.map(m => {
                 return (
                     <div className={cn(stiles.secondCategoryWrap)} key={m._id.secondCategory}>
-                        <div className={cn(stiles.secondCategory)}>
+                        <div onClick={()=> isActivMenuFunc(m)}  className={cn(stiles.secondCategory,{
+                            [stiles.secondCategoryActiv]: m.isActive
+                        })}>
                             {m._id.secondCategory}
                         </div>
-                        <div className={cn(stiles.thertMenuLvlWrap)}>
-                            { buildThertLevelMenu(m.pages)}
+                        <div className={cn(stiles.thertMenuLvlWrap,
+                            {
+                                [stiles.activThertMenu]: !m.isActive
+                            }
+                        )}>  
+                            { buildThertLevelMenu(m.pages, route)}
                         </div>
                     </div>
                 )
@@ -85,17 +76,20 @@ export const Menu = () => {
         )
     }
 
-    const buildThertLevelMenu = (pages:IPageItem[]) => {
+    const buildThertLevelMenu = (pages:IPageItem[],route:string) => {
+        const pathname = usePathname()
+
         return (
             <>
             {pages.map((p)=>{
                 return (
-                    <a key={p.category} href={`/course/${p.alias}`} className={cn(stiles.a)}  >{p.category}</a>
+                    <Link onClick={()=> setMenu(stateMenu)} key={p._id} href={`/${route}/${p.alias}`} className={cn(stiles.a,{
+                        [stiles.activeA]: pathname === `/${route}/${p.alias}`
+                    })}  >{p.category}</Link>
                 )
             })}
             </>
         )
     }
-
     return buildFirstLevelMenu()
 }

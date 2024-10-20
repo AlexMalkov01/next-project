@@ -4,7 +4,8 @@ export interface IMenuItem {
     _id: {
         secondCategory:string
     }
-    pages: IPageItem[]
+    pages: IPageItem[],
+    isActive:boolean
 }
 
 export interface IPageItem {
@@ -18,5 +19,6 @@ export interface IFerstLevelMenuItem {
     route:string,
     name:string,
     icon: JSX.Element,
-    id: MENU_CATEGORY
+    id: MENU_CATEGORY,
+    isActive: boolean
 }

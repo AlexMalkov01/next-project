@@ -3,16 +3,23 @@ import stiles from "./menu.module.css"
 import cn from "classnames"
 import { AppContext } from "@/app/context/app.context"
 import { IFerstLevelMenuItem, IMenuItem, IPageItem } from "@/app/interface/menu.inteface"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname} from "next/navigation"
 import { ferstLevelMenu } from "@/app/helpers/menu.helpers"
 
 export const Menu = () => {
-    const { menu ,firstCategory , setMenu} = useContext(AppContext)
+    const { menu ,firstCategory , setMenu , setCategory} = useContext(AppContext)
     const [stateMenu, useStateMenu] = useState<IMenuItem[]>(menu) 
-
+    const pathname = usePathname();
+    
+    useEffect(()=> { 
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useStateMenu(menu)
+    },[menu])
+    
     const isActivMenuFunc = (menuSulary:IMenuItem)=> {
+       // eslint-disable-next-line react-hooks/rules-of-hooks
        useStateMenu((prev)=> prev.map(m => {
         if (m._id === menuSulary._id && m.isActive === true) {
             return { ...m, isActive: false }; 
@@ -31,10 +38,12 @@ export const Menu = () => {
             <>
             {
             ferstLevelMenu.map((m:IFerstLevelMenuItem)=> {
-                const isActivMenu = m.id === firstCategory
+                const isActivMenu = m.id === firstCategory 
+                
                 return (
                     <div key={m.id}>
-                            <div className={cn(stiles.ferstMinuBlok ,{
+                        
+                            <div onClick={()=> setCategory(m?.id)} className={cn(stiles.ferstMinuBlok ,{
                                 [stiles.ferstActive]: isActivMenu
                             })}>
                                 {m.icon}
@@ -77,7 +86,7 @@ export const Menu = () => {
     }
 
     const buildThertLevelMenu = (pages:IPageItem[],route:string) => {
-        const pathname = usePathname()
+        
 
         return (
             <>

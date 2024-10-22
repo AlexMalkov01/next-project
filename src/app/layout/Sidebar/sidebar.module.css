@@ -1,0 +1,37 @@
+.label {
+    position: relative;
+}
+
+.input {
+    width: 100%;
+    border-radius: 5px;
+
+    outline: none;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+    background: rgb(255, 255, 255);
+    border: none;
+
+    padding: 10px 0 10px 15px;
+    font-size: 16px;
+
+    caret-color: var(--purple-color);
+}
+
+.input::placeholder {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.btnSearch {
+    padding: 6px 7px;
+    border: none;
+
+    position: absolute;
+    border-radius: 5px;
+    background-color:var(--purple-color) ;
+
+    cursor: pointer;
+    right: 3px;
+    top: -6px;
+}

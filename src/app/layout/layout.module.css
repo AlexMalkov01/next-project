@@ -3,20 +3,26 @@
     min-height: 100vh;
     grid-template-columns: auto 230px minmax(320px,1200px) auto;
     grid-template-areas: 
-    ". header header ."
+    ". header headerTop ."
     ". sidebar body ."
     "footer footer footer footer"
     ;
     grid-template-rows: auto 1fr auto;
     gap: 0 30px;
+    background: rgb(245, 246, 248);;
 }
 
 .header {
     grid-area: header;
 }
 
+.headerTop {
+    grid-area: headerTop;
+}
+
 .sidebar {
     grid-area: sidebar;
+    margin-top: 30px;
 }
 
 .footer {
@@ -35,6 +41,7 @@
 
 .body {
     grid-area: body;
+    margin-top: 40px;
 }
 
 @media (max-width: 765px) {
@@ -42,8 +49,7 @@
         grid-template-areas: 
     "header"
     "body"
-    "footer"
-    ;
+    "footer";
     }
 
     .sidebar {

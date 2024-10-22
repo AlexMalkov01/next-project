@@ -23,12 +23,14 @@ export const metadata: Metadata = {
   description: "Curses",
 };
 
+
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { menu } = await getMenuItem()
+  // const { menu } = await getMenuItem()
   return (
     <html lang="ru">
       <Head>
@@ -36,9 +38,8 @@ export default async function RootLayout({
       <link rel="preconnect" href="https://fonts.gstatic.com"/>
       <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
       </Head>
-      
-      <body>
-      <AppContextProvider menu={menu} firstCategory={MENU_CATEGORY.CURSES} >  
+      <body> 
+      <AppContextProvider menu={[]} >  
         {children}
       </AppContextProvider>  
       </body>
@@ -47,11 +48,11 @@ export default async function RootLayout({
 }
 
 
-async function getMenuItem () {
+// async function getMenuItem () {
         
-  const { data: menu } = await axios.post<IMenuItem[]>(`${process.env.API_DAIMON}top-page/find`,{firstCategory:MENU_CATEGORY.CURSES})
+//   const { data: menu } = await axios.post<IMenuItem[]>(`${process.env.API_DAIMON}top-page/find`,{firstCategory:MENU_CATEGORY.CURSES})
   
-  return {
-    menu
-  }
-}
+//   return {
+//     menu
+//   }
+// }

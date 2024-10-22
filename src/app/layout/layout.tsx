@@ -11,7 +11,8 @@ const Layout = ({children}:ILayoutProps)=> {
 
     return (
         <div className={cn(styles.wrapper)}>
-            <Header className={cn(styles.header)}/>
+            {/* <Header className={cn(styles.header)}/>
+            <Header className={cn(styles.headerTop)}/> */}
             <Sidebar className={cn(styles.sidebar)}/>
             <div className={cn(styles.body)}>
                 {children}

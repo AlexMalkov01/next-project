@@ -3,6 +3,8 @@ import { IMenuItem } from "@/app/interface/menu.inteface"
 import { withLayout } from "@/app/layout/layout"
 import axios from "axios"
 import NotFoundComponent from "@/app/layout/notFound/notFound.Component"
+import { IPage, IProduct } from "@/app/interface/page.interface"
+import TopPageComponent from "../../components/top-page-component/topPageComponent"
 interface IParams {
     params: {
         page:string;
@@ -12,15 +14,15 @@ interface IParams {
 
 const firstCategory = 0
 
-async function Course ({ params }:IParams){
-    const {menu , page} = await getMenuItem({params})
+async function TopPage ({ params }:IParams){
+    const {menu , page , products} = await getMenuItem({params})
 
     return (
         <>
             {!page && <NotFoundComponent/>}
             {!!page && 
             <>
-                <h1>{page?.title}</h1>
+               <TopPageComponent product={products} page={page}></TopPageComponent>
             </>
             }
         </>
@@ -40,13 +42,12 @@ export async function getStaticParams () {
         })))
     }
     
-    console.log("TEST =>", path);
     return path
 }
 
 export async function generateMetadata (params:IParams) {
     const { page } = await getMenuItem(params) 
-
+    
     return {
         title: page?.category ?? "IBRAIN"
     }
@@ -55,13 +56,22 @@ export async function generateMetadata (params:IParams) {
 
 async function getMenuItem ({params}:IParams) {
     const firstCategoryItam = ferstLevelMenu.find(m => m.route === params.type)
+    
     try{
         const { data: menu } = await axios.post<IMenuItem[]>(`${process.env.API_DAIMON}top-page/find`,{firstCategory:firstCategoryItam?.id})
-        const { data: page } = await axios(`${process.env.API_DAIMON}top-page/byAlias/${params.page}`)
+        const { data: page } = await axios<IPage>(`${process.env.API_DAIMON}top-page/byAlias/${params.page}`)
+        const { data: products } = await axios.post<IProduct[]>(`${process.env.API_DAIMON}product/find`,
+            {
+                category: page.category,
+                limit: 10
+            }
+        )
+
     
         return {
          menu,
-         page
+         page,
+         products
         }
     }
     catch {
@@ -69,4 +79,4 @@ async function getMenuItem ({params}:IParams) {
   }
 }
 
-export default withLayout(Course)
+export default withLayout(TopPage)

@@ -1,0 +1,77 @@
+.hhBlockWrap {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+ 
+} 
+
+.hhFerstBlock {
+    display: flex;
+    padding: 20px 0;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 15px;
+    width: calc(100% / 4 - 20px);
+
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+}
+
+.hhSecondBlock {
+    width: 100%;
+    display: flex;
+    padding: 20px 0;
+
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+}
+
+.hhSecondCart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: calc(100% / 3);
+
+    border-right: 1px solid rgb(235, 235, 235);
+}
+
+.hhTitleCart {
+    color: var(--black-color);
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 27px;
+}
+
+.hhCount {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 49px;
+
+    color: var(--purple-color);
+}
+
+.hhPrice {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 35px;
+
+    color: var(--black-color);
+}
+
+.hhSecondCart:last-child {
+    border: none;
+}
+
+.hhIconblock {
+    display: flex;
+    gap: 5px;
+}
+
+.hhIcoonFill circle {
+    fill: rgb(187, 187, 187);;
+}
